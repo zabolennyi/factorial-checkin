@@ -10,6 +10,11 @@ const currentYear = Cypress.moment().format('YYYY')
 const appOrigin = 'https://app.factorialhr.com'
 const apiOrigin = 'https://api.factorialhr.com'
 const shiftToCopy = ''
+const shiftToDelete = ''
+
+const email = Cypress.env('email')
+const password = Cypress.env('password')
+const employee_id = Cypress.env('employee_id')
 
 function randomNumber(min, max) {  
   return Math.floor(Math.random() * (max - min) + min); 
@@ -27,8 +32,8 @@ describe('login', () => {
         'Referer' : 'https://factorialhr.com/users/sign_in'
       },
       body: {
-        'user[email]':Cypress.env('email'),
-        'user[password]':Cypress.env('password'),
+        'user[email]':email,
+        'user[password]':password,
         '[remember_me]': 0
       }
     }).then((response) => {
@@ -49,12 +54,14 @@ describe('Get Periods', () => {
         qs: {
           year: currentYear,
           month: currentMonth,
-          employee_id:Cypress.env('employee_id')
+          employee_id:employee_id
         }
       })
       .then((response) => {
         const current_month_id = response.body[0].id
         expect(response.status).to.eq(200)
+        expect(current_month_id).to.exist
+        expect(response.body).to.not.be.null
         return current_month_id
       })
     })
@@ -74,6 +81,9 @@ describe('Get days in current month', () => {
       .then((response) => {
         const daysInfoInCurrentMonth = response.body
         expect(response.status).to.eq(200)
+        expect(daysInfoInCurrentMonth).to.exist
+        expect(response.body[0].id).to.exist
+        expect(response.body).to.not.be.null
         return daysInfoInCurrentMonth
       })
     })
@@ -100,7 +110,11 @@ describe('check-in', () => {
         "clock_out":"13:00"
       }
     })
-    .then((response) => {expect(response.status).to.eq(201)
+    .then((response) => {
+      expect(response.status).to.eq(201)
+      expect(response.body).to.exist
+      expect(response.body).to.not.be.null
+      expect(response.body.id).to.exist
       })
       cy.request({
         method: 'post',
@@ -119,13 +133,15 @@ describe('check-in', () => {
           "clock_out":"18:" + randomMin
         }
       })
-      .then((response) => {expect(response.status).to.eq(201)
-        })
+      .then((response) => {
+        expect(response.status).to.eq(201)
+        expect(response.body).to.exist
+        expect(response.body).to.not.be.null
+        expect(response.body.id).to.exist
+     })
     })
   })
 })
-// 
-// 
 // 
 // describe('fill all shifts from selected one', () => {
 //   it('should successfully copy time from selected to all shifts', () => {
@@ -146,20 +162,19 @@ describe('check-in', () => {
 //     cy.getPeriods().then(current_month_id => {
 //     cy.request({
 //       method: 'delete',
-//       url: apiOrigin + '/attendance/shifts/' + shiftNumber, //set shift to delete
+//       url: apiOrigin + '/attendance/shifts/' + shiftToDelete, //set shift to delete
 //       headers: {
 //         'Referer': appOrigin + '/attendance/shifts/clock-in/' + currentYear + '/' + currentMonth,
 //         'Origin':appOrigin,
 //         'Content-type':'application/json' 
 //       }
 //     })
-//     .then((response) => {expect(response.status).to.eq(204)
+//     .then((response) => {
+//       expect(response.status).to.eq(204)
 //       })
 //     })
 //   })
 // })
-
-
 
 // describe('request a vacations', () => {
 //   it('should successfully send request for vacations', () => {
@@ -174,9 +189,9 @@ describe('check-in', () => {
 //         },
 //         body: {  
 //           'description':null,
-//           'employee_id': 0000, //put employer_id
-//           'finish_on':'2019-08-01', //put date
-//           'start_on':'2019-08-01', //put date
+//           'employee_id': employee_id, //put employer_id
+//           'finish_on':'2019-08-01', //put end date
+//           'start_on':'2019-08-01', //put start date
 //           'half_day':null,
 //           'leave_type_id':0000, //put leave type id
 //           'medical_leave_type':null,
@@ -199,5 +214,3 @@ describe('check-in', () => {
 // })
 
 })
-
-
