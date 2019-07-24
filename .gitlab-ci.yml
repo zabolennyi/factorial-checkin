@@ -1,0 +1,22 @@
+variables:
+  npm_config_cache: "$CI_PROJECT_DIR/.npm"
+  CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/cache/Cypress"
+
+stages:
+  - api_tests
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - .npm
+    - cache/Cypress
+
+cypress_api_test:
+  image: cypress/base:10
+  stage: api_tests
+  script:
+    - npm install
+    - npm ci
+    - npm run cy:run
+  only:
+    - master
