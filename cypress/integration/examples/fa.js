@@ -7,8 +7,11 @@
 const currentDay = Cypress.moment().format('DD')
 const currentMonth = Cypress.moment().format('M')
 const currentYear = Cypress.moment().format('YYYY')
+
 const appOrigin = 'https://app.factorialhr.com'
 const apiOrigin = 'https://api.factorialhr.com'
+
+const observation = ''
 const shiftToCopy = ''
 const shiftToDelete = ''
 
@@ -20,7 +23,7 @@ function randomNumber(min, max) {
   return Math.floor(Math.random() * (max - min) + min); 
 }
 
-var randomMin = randomNumber(10, 59)
+let randomMin = randomNumber(10, 59)
 
 describe('login', () => {
   Cypress.Commands.add("login", () => {
@@ -34,7 +37,7 @@ describe('login', () => {
       body: {
         'user[email]':email,
         'user[password]':password,
-        '[remember_me]': 0
+        'user[remember_me]': 0
       }
     }).then((response) => {
       const cookie = response.headers['set-cookie'][0]
@@ -80,11 +83,42 @@ describe('Get days in current month', () => {
       })
       .then((response) => {
         const daysInfoInCurrentMonth = response.body
+        const date = new Date();
+        const today = date.getDate();
+        const currentDayInfo = daysInfoInCurrentMonth.find(x => x.day === today);
+        const todayShiftId = currentDayInfo.id
         expect(response.status).to.eq(200)
         expect(daysInfoInCurrentMonth).to.exist
         expect(response.body[0].id).to.exist
         expect(response.body).to.not.be.null
-        return daysInfoInCurrentMonth
+        return daysInfoInCurrentMonth, currentDayInfo, todayShiftId
+      })
+    })
+  })
+})
+
+describe('set observation for today', () => {
+  it('should successfully set observation for current day', () => {
+    cy.getDaysInfoInCurrentMonth().then(todayShiftId => {
+      cy.getPeriods().then(current_month_id => {
+        cy.request({
+          method: 'patch',
+          url: apiOrigin + '/attendance/shifts/' + todayShiftId,
+          headers: {
+            'Referer': appOrigin + '/attendance/clock-in/' + currentYear + '/' + currentMonth,
+            'Origin':appOrigin,
+            'Content-type':'application/json' 
+          },
+          body: {
+            "observations": observation
+          }
+        })
+        .then((response) => {
+          expect(response.status).to.eq(200)
+          expect(response.body).to.not.be.null
+          expect(response.body.observations).to.eq(observation)
+          console.log(response)
+        })
       })
     })
   })
@@ -93,6 +127,7 @@ describe('Get days in current month', () => {
 describe('check-in', () => {
   it('should successfully check-in', () => {
     cy.getPeriods().then(current_month_id => {
+    //set morning time
     cy.request({
       method: 'post',
       url: apiOrigin + '/attendance/shifts',
@@ -106,7 +141,7 @@ describe('check-in', () => {
         "minutes":0,
         "day":currentDay,
         "observations":null,
-        "clock_in":"09:" + randomMin,
+        "clock_in":"08:" + randomMin,
         "clock_out":"13:00"
       }
     })
@@ -116,6 +151,7 @@ describe('check-in', () => {
       expect(response.body).to.not.be.null
       expect(response.body.id).to.exist
       })
+      //set evening time
       cy.request({
         method: 'post',
         url: apiOrigin + '/attendance/shifts',
@@ -130,7 +166,7 @@ describe('check-in', () => {
           "day":currentDay,
           "observations":null,
           "clock_in":"14:00",
-          "clock_out":"18:" + randomMin
+          "clock_out":"17:" + randomMin
         }
       })
       .then((response) => {
@@ -214,3 +250,5 @@ describe('check-in', () => {
 // })
 
 })
+
+
