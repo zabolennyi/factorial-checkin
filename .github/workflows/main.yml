@@ -4,8 +4,7 @@ jobs:
   cypress-run:
     runs-on: ubuntu-16.04
     steps:
-      - uses: actions/checkout@v1
-      - uses: factorial-checkin/github-action@v1
+      - uses: actions/checkout@master
         with:
           browser: chrome
           headless: true
