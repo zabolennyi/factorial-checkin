@@ -6,6 +6,8 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: install
+        env:
+          email: ${{ secrets.email }}
         run: |
           npm install
           npm run cy:ci
