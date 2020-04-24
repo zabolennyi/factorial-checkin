@@ -8,7 +8,6 @@ jobs:
     name: E2E
     steps:
       - name: Test
-        uses: actions/setup-node@v1
         with:
           browser: chrome
           headless: true
