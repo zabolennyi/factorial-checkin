@@ -1,17 +1,11 @@
-
-
-name: tags
+name: Chrome headless
 on: [push]
 jobs:
   cypress-run:
     runs-on: ubuntu-16.04
-    name: E2E
     steps:
-      - name: Test
-        run: |
-          npm install
-          npm ci
-          npm run cy:ci
+      - uses: actions/checkout@v1
+      - uses: factorial-checkin/github-action@v1
         with:
           browser: chrome
           headless: true
