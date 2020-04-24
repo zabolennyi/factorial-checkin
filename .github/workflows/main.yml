@@ -1,4 +1,4 @@
-name: example-chrome
+name: chrome
 on: [push]
 jobs:
   tests:
@@ -6,5 +6,8 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: tests
-        run: npm install
+        run: |
+          npm install
+          npm ci
+          npm run cy:ci
         working-directory: ./

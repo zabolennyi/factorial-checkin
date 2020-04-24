@@ -7,11 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "cy:ci":"./node_modules/.bin/cypress run --config video=false --env email=$email,password=$password,employee_id=$employee_id",
     "cy:open": "./node_modules/.bin/cypress open",
-    "cy:run": "npm run cy:clean && ./node_modules/.bin/cypress run --config video=false --env email=$email,password=$password,employee_id=$employee_id",
-    "cy:clean": "rm -fr mochawesome-report",
-    "cy:merge-reports": "mochawesome-merge --reportDir mochawesome-report > mochawesome-report/output.json",
-    "cy:generate-report": "marge mochawesome-report/mochawesome.json",
-    "cy:run-with-report": "npm run cy:run && npm run cy:generate-report"
+    "cy:run": "./node_modules/.bin/cypress run --config video=false --env email=$email,password=$password,employee_id=$employee_id"
   },
   "repository": {
     "type": "git",
@@ -24,16 +20,9 @@
   },
   "homepage": "https://gitlab.com/zabolennyi/fa#readme",
   "dependencies": {
-    "cypress": "^3.2.0",
-    "mocha": "^5.2.0"
+    "cypress": "^3.2.0"
   },
   "devDependencies": {
-    "cypress": "^3.4.0",
-    "cypress-multi-reporters": "^1.1.22",
-    "express": "^4.16.4",
-    "mocha-junit-reporters": "^1.23.6",
-    "mochawesome": "^4.0.0",
-    "mochawesome-merge": "^2.0.0",
-    "prettier": "1.18.2"
+    "cypress": "^3.4.0"
   }
 }
