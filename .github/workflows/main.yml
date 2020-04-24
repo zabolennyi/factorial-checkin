@@ -13,7 +13,6 @@ jobs:
         browser: chrome
         headless: true
     - name: Run a one-line script
-      run: 
-        - npm install
-        - npm ci
-        - npm run cy:ci
+      run: npm install
+      run: npm ci
+      run: npm run cy:ci
