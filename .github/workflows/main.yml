@@ -4,6 +4,7 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     steps:
+      working-directory: ./
       - run: npm install
       - run: npm ci
       - run: npm run cy:ci
