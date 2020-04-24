@@ -4,10 +4,13 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+      uses: actions/checkout@master
+
       - name: Chrome headless
         uses: ./
         with:
-          working-directory: examples/chrome
+          working-directory: ./
           browser: chrome
           headless: true
           
