@@ -14,5 +14,6 @@ jobs:
         headless: true
     - name: Run a one-line script
     run: |
-    npm install
-    npm run cy:ci
+      npm install
+      npm ci
+      npm run cy:ci
