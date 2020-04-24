@@ -15,5 +15,4 @@ jobs:
     - name: Run a one-line script
     run: |
     npm install
-    npm ci
     npm run cy:ci
