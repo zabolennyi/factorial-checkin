@@ -4,6 +4,9 @@ jobs:
   cypress-run:
     runs-on: ubuntu-16.04
     steps:
-      - run: |
-        npm install
-        npm run cy:ci
+      - name: Chrome headless
+        uses: ./
+        with:
+          working-directory: ./
+          browser: chrome
+          headless: true
