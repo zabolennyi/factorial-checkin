@@ -8,10 +8,10 @@ jobs:
     name: E2E
     steps:
       - name: Test
-        with:
-          browser: chrome
-          headless: true
-      - run: |
+        run: |
           npm install
           npm ci
           npm run cy:ci
+        with:
+          browser: chrome
+          headless: true
