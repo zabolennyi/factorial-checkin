@@ -6,6 +6,8 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: install
-        run: npm install
+        run: |
+          npm install
+          npm run cy:ci
         working-directory: ./
 
