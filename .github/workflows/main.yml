@@ -5,11 +5,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@master
+        run: npm install
+        working-directory: ./
 
-      - name: Chrome headless
-        uses: ./
-        with:
-          working-directory: ./
-          browser: chrome
-          headless: true
