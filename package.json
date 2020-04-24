@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "cy:ci":"cypress ci --env email=$email,password=$password,employee_id=$employee_id",
+    "cy:ci":"./node_modules/.bin/cypress run --config video=false --env email=$email,password=$password,employee_id=$employee_id",
     "cy:open": "./node_modules/.bin/cypress open",
     "cy:run": "npm run cy:clean && ./node_modules/.bin/cypress run --config video=false --env email=$email,password=$password,employee_id=$employee_id",
     "cy:clean": "rm -fr mochawesome-report",
