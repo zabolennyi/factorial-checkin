@@ -6,5 +6,4 @@ jobs:
     steps:
       - run: |
         npm install
-        npm ci
         npm run cy:ci
