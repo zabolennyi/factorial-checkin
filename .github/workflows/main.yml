@@ -1,11 +1,15 @@
-name: Chrome headless
+name: example-chrome
 on: [push]
 jobs:
-  cypress-run:
-    runs-on: ubuntu-16.04
+  tests:
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: cypress-io/github-action@v1
+      - name: Checkout
+        uses: actions/checkout@master
+
+      - name: Chrome headless
+        uses: ./
         with:
+          working-directory: ./
           browser: chrome
           headless: true
