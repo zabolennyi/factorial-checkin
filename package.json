@@ -10,19 +10,12 @@
     "cy:run": "./node_modules/.bin/cypress run --config video=false --env email=$email,password=$password,employee_id=$employee_id"
   },
   "repository": {
-    "type": "git",
-    "url": "git+https://gitlab.com/zabolennyi/fa.git"
+    "type": "git"
   },
   "author": "Serhii Zabolennyi",
   "license": "ISC",
-  "bugs": {
-    "url": "https://gitlab.com/zabolennyi/fa/issues"
-  },
-  "homepage": "https://gitlab.com/zabolennyi/fa#readme",
-  "dependencies": {
-    "cypress": "^3.2.0"
-  },
   "devDependencies": {
-    "cypress": "^3.4.0"
+    "cypress": "4.1.0",
+    "image-size": "0.8.3"
   }
 }
