@@ -13,6 +13,6 @@ jobs:
           browser: chrome
           headless: true
       - run: |
-        npm install
-        npm ci
-        npm run cy:ci
+          npm install
+          npm ci
+          npm run cy:ci
