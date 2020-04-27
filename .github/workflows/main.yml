@@ -1,5 +1,8 @@
-name: example-chrome
-on: [push]
+name: chrome
+on: 
+  schedule:
+    - cron: "" 
+
 jobs:
   tests:
     runs-on: ubuntu-latest
@@ -8,6 +11,8 @@ jobs:
       - name: install
         env:
           email: ${{ secrets.email }}
+          password: ${{ secrets.password }}
+          employee_id: ${{ secrets.employee_id }}
         run: |
           npm install
           npm run cy:ci
