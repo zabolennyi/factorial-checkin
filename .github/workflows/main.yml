@@ -1,7 +1,7 @@
 name: chrome
-on: 
+on:
   schedule:
-    - cron: "" 
+    - cron: '0 14 * * 1-5'
 
 jobs:
   tests:
@@ -12,9 +12,8 @@ jobs:
         env:
           email: ${{ secrets.email }}
           password: ${{ secrets.password }}
-          employee_id: ${{ secrets.employee_id }}
+          employee_id: ${{ secrets.employeeId }}
         run: |
           npm install
           npm run cy:ci
         working-directory: ./
-

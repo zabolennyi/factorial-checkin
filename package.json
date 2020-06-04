@@ -1,21 +1,24 @@
 {
-  "name": "fa",
-  "version": "0.0.1",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "cy:ci":"./node_modules/.bin/cypress run --config video=false --env email=$email,password=$password,employee_id=$employee_id",
-    "cy:open": "./node_modules/.bin/cypress open",
-    "cy:run": "./node_modules/.bin/cypress run --config video=false --env email=$email,password=$password,employee_id=$employee_id"
-  },
-  "repository": {
-    "type": "git"
-  },
-  "author": "Serhii Zabolennyi",
-  "license": "ISC",
-  "devDependencies": {
-    "cypress": "4.1.0",
-    "image-size": "0.8.3"
-  }
+	"name": "fa",
+	"version": "0.0.1",
+	"description": "Factorial CheckIn using Cypress API",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"cy:ci": "./node_modules/.bin/cypress run --config video=false --env email=$email,password=$password,employeeId=$employeeId --headless",
+		"cy:open": "./node_modules/.bin/cypress open"
+	},
+	"repository": {
+		"type": "git"
+	},
+	"author": "Serhii Zabolennyi",
+	"license": "ISC",
+	"devDependencies": {
+		"cypress": "4.7.0",
+		"cypress-promise": "^1.1.0",
+		"image-size": "0.8.3"
+	},
+	"dependencies": {
+		"moment": "^2.26.0"
+	}
 }

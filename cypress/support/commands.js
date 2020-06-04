@@ -1,25 +1,93 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add("login", (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add("dismiss", { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This is will overwrite an existing command --
-// Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+const apiOrigin = 'https://api.factorialhr.com'
+
+Cypress.Commands.add('login', (email, password) => {
+	return cy
+		.request({
+			method: 'post',
+			url: apiOrigin + '/sessions',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+				Referer: 'https://factorialhr.com/users/sign_in',
+			},
+			body: {
+				'user[email]': email,
+				'user[password]': password,
+				'user[remember_me]': 0,
+			},
+		})
+		.then((response) => {
+			const cookie = response.headers['set-cookie'][0]
+			console.log(typeof cookie)
+			expect(response.headers).to.have.property('set-cookie')
+			expect(response.status).to.eq(201)
+			return cookie
+		})
+})
+
+Cypress.Commands.add('getPeriods', (currentYear, currentMonth, employee_id, cookie) => {
+	cy.request({
+		method: 'get',
+		url: apiOrigin + '/attendance/periods',
+		headers: {
+			cookie: cookie,
+		},
+		qs: {
+			year: currentYear,
+			month: currentMonth,
+			employee_id: employee_id,
+		},
+	}).then((response) => {
+		const current_month_id = response.body[0].id
+		expect(response.status).to.eq(200)
+		expect(current_month_id).to.exist
+		expect(response.body).to.not.be.null
+		return current_month_id
+	})
+})
+
+Cypress.Commands.add('setTodayShift', (current_month_id, randomMin, todayDay, clockIn, clockOut, observations, cookie) => {
+	cy.request({
+		method: 'post',
+		url: apiOrigin + '/attendance/shifts',
+		headers: {
+			cookie: cookie,
+		},
+		qs: {
+			period_id: current_month_id,
+		},
+		body: {
+			period_id: current_month_id,
+			clock_in: clockIn,
+			clock_out: clockOut,
+			minutes: 0,
+			day: todayDay,
+			observations: observations,
+			history: [],
+		},
+	}).then((response) => {
+		expect(response.status).to.eq(201)
+		expect(response.body).to.exist
+		expect(response.body).to.not.be.null
+		return response.body
+	})
+})
+
+Cypress.Commands.add('getTodayLeaveStatus', (calendarId, currentYear, currentMonth, todayDay, cookie) => {
+	cy.request({
+		method: 'get',
+		url: apiOrigin + '/attendance/calendar',
+		headers: {
+			cookie: cookie,
+		},
+		qs: {
+			id: calendarId,
+			year: currentYear,
+			month: currentMonth,
+		},
+	}).then((response) => {
+		expect(response.status).to.eq(200)
+		const currentLeaveDayInfo = response.body.filter((day) => day.day === todayDay)[0]
+		expect(currentLeaveDayInfo).to.not.be.null
+		return currentLeaveDayInfo
+	})
+})
