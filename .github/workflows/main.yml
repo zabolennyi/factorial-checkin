@@ -12,7 +12,7 @@ jobs:
         env:
           email: ${{ secrets.email }}
           password: ${{ secrets.password }}
-          employee_id: ${{ secrets.employeeId }}
+          employeeId: ${{ secrets.employeeId }}
         run: |
           npm install
           npm run cy:ci

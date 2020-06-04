@@ -24,7 +24,7 @@ Cypress.Commands.add('login', (email, password) => {
 		})
 })
 
-Cypress.Commands.add('getPeriods', (currentYear, currentMonth, employee_id, cookie) => {
+Cypress.Commands.add('getPeriods', (currentYear, currentMonth, employeeId, cookie) => {
 	cy.request({
 		method: 'get',
 		url: apiOrigin + '/attendance/periods',
@@ -34,7 +34,7 @@ Cypress.Commands.add('getPeriods', (currentYear, currentMonth, employee_id, cook
 		qs: {
 			year: currentYear,
 			month: currentMonth,
-			employee_id: employee_id,
+			employee_id: employeeId,
 		},
 	}).then((response) => {
 		const current_month_id = response.body[0].id
