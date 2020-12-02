@@ -1,30 +1,28 @@
 const apiOrigin = 'https://api.factorialhr.com'
 
 Cypress.Commands.add('login', (email, password) => {
-	return cy
-		.request({
-			method: 'post',
-			url: apiOrigin + '/sessions',
-			headers: {
-				'Content-Type': 'application/x-www-form-urlencoded',
-				Referer: 'https://factorialhr.com/users/sign_in',
-			},
-			body: {
-				'user[email]': email,
-				'user[password]': password,
-				'user[remember_me]': 0,
-			},
-		})
-		.then((response) => {
-			const cookie = response.headers['set-cookie'][0]
-			console.log(typeof cookie)
-			expect(response.headers).to.have.property('set-cookie')
-			expect(response.status).to.eq(201)
-			return cookie
-		})
+	cy.request({
+		method: 'post',
+		url: apiOrigin + '/sessions',
+		headers: {
+			'Content-Type': 'application/x-www-form-urlencoded',
+			Referer: 'https://factorialhr.com/users/sign_in',
+		},
+		body: {
+			'user[email]': email,
+			'user[password]': password,
+			'user[remember_me]': 0,
+		},
+	}).then((response) => {
+		const cookie = response.headers['set-cookie'][0]
+		console.log(typeof cookie)
+		expect(response.headers).to.have.property('set-cookie')
+		expect(response.status).to.eq(201)
+		return cookie
+	})
 })
 
-Cypress.Commands.add('getPeriods', (currentYear, currentMonth, employeeId, cookie) => {
+Cypress.Commands.add('getPeriods', (currentYear, currentMonth, employee_id, cookie) => {
 	cy.request({
 		method: 'get',
 		url: apiOrigin + '/attendance/periods',
@@ -34,7 +32,7 @@ Cypress.Commands.add('getPeriods', (currentYear, currentMonth, employeeId, cooki
 		qs: {
 			year: currentYear,
 			month: currentMonth,
-			employee_id: employeeId,
+			employee_id: employee_id,
 		},
 	}).then((response) => {
 		const current_month_id = response.body[0].id
