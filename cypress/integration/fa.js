@@ -1,15 +1,15 @@
 //Cypress API Testing Factorial
 
 const moment = require('moment')
-import promisify from 'cypress-promise'
+
 const currentMonth = Cypress.moment().format('M')
 const currentYear = Cypress.moment().format('YYYY')
 const todayDay = parseInt(moment().format('D'))
 
 const email = Cypress.env('email')
 const password = Cypress.env('password')
-const employeeId = Cypress.env('employeeId')
-const calendarId = employeeId
+const employee_id = Cypress.env('employee_id')
+const calendarId = employee_id
 
 const observations = ''
 
@@ -19,14 +19,24 @@ function randomNumber(min, max) {
 
 const randomMin = randomNumber(10, 59)
 
-it('', async () => {
-	let cookie = await promisify(cy.login(email, password))
-	const current_month_id = await promisify(cy.getPeriods(currentYear, currentMonth, employeeId, cookie))
-	const todayLeaveStatus = await promisify(cy.getTodayLeaveStatus(calendarId, currentYear, currentMonth, todayDay, cookie))
-	if (todayLeaveStatus.is_leave === true || todayLeaveStatus.is_working === false) {
-		console.log('Today is Off-day')
-	} else {
-		await promisify(cy.setTodayShift(current_month_id, randomMin, todayDay, `09:${randomMin}`, '13:00', observations, cookie))
-		await promisify(cy.setTodayShift(current_month_id, randomMin, todayDay, '14:00', `18:${randomMin}`, observations, cookie))
-	}
+it('', () => {
+	cy.visit('https://api.factorialhr.com/users/sign_in')
+	cy.get('#user_email').type(email)
+	cy.get('#user_password')
+		.type(password)
+		.type('{enter}')
+		.then((response) => {
+			cy.getCookie('_factorial_session').then((cookie) => {
+				cy.getPeriods(currentYear, currentMonth, employee_id, cookie).then((current_month_id) => {
+					cy.getTodayLeaveStatus(calendarId, currentYear, currentMonth, todayDay, cookie).then((todayLeaveStatus) => {
+						if (todayLeaveStatus.is_leave === true || todayLeaveStatus.is_working === false) {
+							console.log('Today is Off-day')
+						} else {
+							cy.setTodayShift(current_month_id, randomMin, todayDay, `09:${randomMin}`, '13:00', observations, cookie)
+							cy.setTodayShift(current_month_id, randomMin, todayDay, '14:00', `18:${randomMin}`, '', cookie)
+						}
+					})
+				})
+			})
+		})
 })
