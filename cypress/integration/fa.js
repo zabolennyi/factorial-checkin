@@ -29,7 +29,7 @@ it('', () => {
 			cy.getCookie('_factorial_session').then((cookie) => {
 				cy.getPeriods(currentYear, currentMonth, employee_id, cookie).then((current_month_id) => {
 					cy.getTodayLeaveStatus(calendarId, currentYear, currentMonth, todayDay, cookie).then((todayLeaveStatus) => {
-						if (todayLeaveStatus.is_leave === true || todayLeaveStatus.is_working === false) {
+						if (todayLeaveStatus.is_leave === true || todayLeaveStatus.is_laborable === false) {
 							console.log('Today is Off-day')
 						} else {
 							cy.setTodayShift(current_month_id, randomMin, todayDay, `09:${randomMin}`, '13:00', observations, cookie)
