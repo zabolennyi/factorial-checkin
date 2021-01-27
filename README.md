@@ -16,4 +16,4 @@ As it mentioned earlier, in the Github Actions CI file config are set by default
 
 - hours are set between 09:00-13:00 and 14:00-18:00
 - observation is empty (it is the comment that u see next to the hours marked in Factorial)
-- cron is set to run once a day every workday `[0 14 \* \* 1-5]`
+- cron is set to run once a day every workday at 14:00 `[0 14 \* \* 1-5]` .

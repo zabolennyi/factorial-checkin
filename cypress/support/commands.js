@@ -35,15 +35,15 @@ Cypress.Commands.add('getPeriods', (currentYear, currentMonth, employee_id, cook
 			employee_id: employee_id,
 		},
 	}).then((response) => {
-		const current_month_id = response.body[0].id
+		const currentMonthId = response.body[0].id
 		expect(response.status).to.eq(200)
-		expect(current_month_id).to.exist
+		expect(currentMonthId).to.exist
 		expect(response.body).to.not.be.null
-		return current_month_id
+		return currentMonthId
 	})
 })
 
-Cypress.Commands.add('setTodayShift', (current_month_id, randomMin, todayDay, clockIn, clockOut, observations, cookie) => {
+Cypress.Commands.add('setTodayShift', (currentMonthId, todayDay, clockIn, clockOut, observations, cookie) => {
 	cy.request({
 		method: 'post',
 		url: apiOrigin + '/attendance/shifts',
@@ -51,10 +51,10 @@ Cypress.Commands.add('setTodayShift', (current_month_id, randomMin, todayDay, cl
 			cookie: cookie,
 		},
 		qs: {
-			period_id: current_month_id,
+			period_id: currentMonthId,
 		},
 		body: {
-			period_id: current_month_id,
+			period_id: currentMonthId,
 			clock_in: clockIn,
 			clock_out: clockOut,
 			minutes: 0,

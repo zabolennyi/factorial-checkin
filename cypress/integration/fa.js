@@ -8,8 +8,8 @@ const todayDay = parseInt(moment().format('D'))
 
 const email = Cypress.env('email')
 const password = Cypress.env('password')
-const employee_id = Cypress.env('employee_id')
-const calendarId = employee_id
+const employeeId = Cypress.env('employeeId')
+const calendarId = employeeId
 
 const observations = ''
 
@@ -27,13 +27,13 @@ it('', () => {
 		.type('{enter}')
 		.then((response) => {
 			cy.getCookie('_factorial_session').then((cookie) => {
-				cy.getPeriods(currentYear, currentMonth, employee_id, cookie).then((current_month_id) => {
+				cy.getPeriods(currentYear, currentMonth, employeeId, cookie).then((currentMonthId) => {
 					cy.getTodayLeaveStatus(calendarId, currentYear, currentMonth, todayDay, cookie).then((todayLeaveStatus) => {
 						if (todayLeaveStatus.is_leave === true || todayLeaveStatus.is_laborable === false) {
 							console.log('Today is Off-day')
 						} else {
-							cy.setTodayShift(current_month_id, randomMin, todayDay, `09:${randomMin}`, '13:00', observations, cookie)
-							cy.setTodayShift(current_month_id, randomMin, todayDay, '14:00', `18:${randomMin}`, '', cookie)
+							cy.setTodayShift(currentMonthId, todayDay, `09:00`, '13:00', observations, cookie)
+							cy.setTodayShift(currentMonthId, todayDay, '14:00', `18:00`, '', cookie)
 						}
 					})
 				})
