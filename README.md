@@ -1,6 +1,6 @@
 ## Factorial automation tool
 
-Is used to check hours in Factorial. Based on Cypress test automation.
+Is used to check hours in Factorial. Based on Cypress test automation..
 
 #### To get started:
 
