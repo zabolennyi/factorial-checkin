@@ -19,7 +19,7 @@ function randomNumber(min, max) {
 
 const randomMin = randomNumber(10, 59)
 
-it('', () => {
+xit('', () => {
 	cy.visit('https://api.factorialhr.com/users/sign_in')
 	cy.get('#user_email').type(email)
 	cy.get('#user_password')
