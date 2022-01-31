@@ -23,12 +23,9 @@ let details = {
   "location": ""
 }
 
-console.log(today)
-console.log(entry1)
-
 const formBody = Object.entries(details).map(([key, value]) => encodeURIComponent(key) + '=' + encodeURIComponent(value)).join('&')
 
-xit('', () => {
+it('', () => {
 	cy.visit('https://app.holded.com/login')
 	cy.get('#login-email').type(email)
 	cy.get('#login-password')

@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"cy:ci": "./node_modules/.bin/cypress run --config video=false --env email=$email,password=$password,employeeId=$employeeId --headless",
+		"cy:ci": "./node_modules/.bin/cypress run --config video=false --env email=$email,password=$password --headless",
 		"cy:open": "./node_modules/.bin/cypress open"
 	},
 	"repository": {

@@ -12,7 +12,6 @@
 #         env:
 #           email: ${{ secrets.email }}
 #           password: ${{ secrets.password }}
-#           employeeId: ${{ secrets.employeeId }}
 #         run: |
 #           npm install
 #           npm run cy:ci

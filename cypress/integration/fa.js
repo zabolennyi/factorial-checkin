@@ -8,7 +8,7 @@ const todayDay = parseInt(moment().format('D'))
 
 const email = Cypress.env('email')
 const password = Cypress.env('password')
-const employeeId = Cypress.env('employeeId')
+const employeeId = ''
 const calendarId = employeeId
 
 const observations = ''
