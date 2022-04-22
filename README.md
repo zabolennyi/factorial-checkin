@@ -1,16 +1,25 @@
-## Factorial automation tool
+## Factorial/Holded automation tool
 
-Is used to check hours in Factorial. Based on Cypress test automation..
+Is used to check hours in Factorial/Holded. Based on Cypress test automation. Basicaly the main funcionality is to clock in hours to Holded. It runs in CI github pipeline, which include cypress test. In test specified few steps to run (open holded page, do login, get coockies and later reuse this coockie to send POST call to Holded clockIn endpoint). 
 
-#### To get started:
+#### To get started with Holded:
+
+1. Copy this repo and upload to your PRIVATE repo on GitHub
+2. Uncomment the Github Action file [here](./.github/workflows/mail.yml)
+3. Add three parameters as an ENV var to your repo. (email, password).
+
+<del>
+#### To get started with Factorial:
 
 1. Copy this repo and upload to your PRIVATE repo on GitHub
 2. Uncomment the Github Action file [here](./.github/workflows/mail.yml)
 3. Add three parameters as an ENV var to your repo. (email, pass, employeeId). **EmployeeId** can be found under your Factorial account.
 
+</del>
+
 #### Usage:
 
-As it mentioned earlier, in the Github Actions CI file config are set by default that it will run every workday. Script are made by running simple Cypress test, and passing through login UI verification, to obtain cookie, that will be used in the next step to make POST calls to mark hours in Factorial.
+As it mentioned earlier, in the Github Actions CI file config are set by default that it will run every workday. Script are made by running simple Cypress test, and passing through login UI verification, to obtain cookie, that will be used in the next step to make POST calls to mark hours in Factorial/Holded.
 
 #### Default var:
 

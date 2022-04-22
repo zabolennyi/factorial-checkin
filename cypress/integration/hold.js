@@ -8,10 +8,10 @@ const pass = Cypress.env('password')
 const epoch = (hour) => moment(moment().format(`MM/DD/YYYY ${hour}`), "MM/DD/YYYY HH:mm").unix()
 
 const today = epoch("00:00")-3600
-const entry1 = epoch("09:00")-3600
-const leave1 = epoch("13:00")-3600
-const entry2 = epoch("14:00")-3600
-const leave2 = epoch("18:00")-3600
+const entry1 = epoch("08:00")-3600
+const leave1 = epoch("12:00")-3600
+const entry2 = epoch("13:00")-3600
+const leave2 = epoch("17:00")-3600
 
 let details = {
   "day": today,
