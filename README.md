@@ -5,14 +5,14 @@ Is used to check hours in Factorial/Holded. Based on Cypress test automation. Ba
 #### To get started with Holded:
 
 1. Copy this repo and upload to your PRIVATE repo on GitHub
-2. Uncomment the Github Action file [here](./.github/workflows/mail.yml)
+2. Uncomment the Github Action file [here](./.github/workflows/main.yml)
 3. Add three parameters as an ENV var to your repo. (email, password).
 
 <del>
 #### To get started with Factorial:
 
 1. Copy this repo and upload to your PRIVATE repo on GitHub
-2. Uncomment the Github Action file [here](./.github/workflows/mail.yml)
+2. Uncomment the Github Action file [here](./.github/workflows/main.yml)
 3. Add three parameters as an ENV var to your repo. (email, pass, employeeId). **EmployeeId** can be found under your Factorial account.
 
 </del>
